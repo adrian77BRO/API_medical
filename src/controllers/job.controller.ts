@@ -51,7 +51,7 @@ export const getJobByIdController = async (req: Request, res: Response) => {
 
 export const getJobsByDoctorController = async (req: Request, res: Response) => {
     try {
-        const jobs = await getJobsByDoctorService(req.params.doctor);
+        const jobs = await getJobsByDoctorService(parseInt(req.params.doctor));
 
         return res.status(200).json({
             status: 'success',
@@ -69,8 +69,8 @@ export const getJobsByDoctorController = async (req: Request, res: Response) => 
 
 export const createJobController = async (req: Request, res: Response) => {
     try {
-        const { title, description, price, id_doctor } = req.body;
-        const newJob = await createJobService(title, description, price, id_doctor);
+        const { title, description, cost, id_doctor } = req.body;
+        const newJob = await createJobService(title, description, cost, id_doctor);
 
         return res.status(201).json({
             status: 'success',

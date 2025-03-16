@@ -2,7 +2,7 @@ import { db } from '../config/database';
 import { Doctor } from '../models/doctor';
 
 export const findDoctorByEmailService = async (email: string): Promise<Doctor | null> => {
-    const [rows] = await db.query('SELECT * FROM doctors WHERE email = ?', [email]);
+    const [rows] = await db.query('SELECT * FROM doctors WHERE email = ?', email);
     const users = rows as Doctor[];
     return users.length ? users[0] : null;
 };

@@ -10,8 +10,8 @@ import { authenticateJWT } from '../middlewares/auth.middleware';
 
 const appointmentRouter = express.Router();
 
-appointmentRouter.get('/', authenticateJWT, getPendingAppointmentsController)
 appointmentRouter.get('/appoint/:id', authenticateJWT, getAppointmentByIdController);
+appointmentRouter.get('/pending/:doctor', authenticateJWT, getPendingAppointmentsController)
 appointmentRouter.get('/:job', authenticateJWT, getAppointmentsByJobController);
 appointmentRouter.post('/', authenticateJWT, createAppointmentController);
 appointmentRouter.put('/:id', authenticateJWT, confirmAppointmentController)

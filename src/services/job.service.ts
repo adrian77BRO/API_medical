@@ -14,30 +14,30 @@ export const getJobByIdService = async (id: number): Promise<Job | null> => {
     return appointments.length ? appointments[0] : null;
 };
 
-export const getJobsByDoctorService = async (id_doctor: string): Promise<Job[]> => {
+export const getJobsByDoctorService = async (id_doctor: number): Promise<Job[]> => {
     const query = 'SELECT * FROM jobs WHERE id_doctor = ? ORDER BY created_at DESC';
-    const [rows] = await db.query(query, [id_doctor]);
+    const [rows] = await db.query(query, id_doctor);
     return rows as Job[];
 };
 
 export const createJobService = async (
     title: string,
     description: string,
-    price: number,
+    cost: number,
     id_doctor: number
 
 ): Promise<Job> => {
     const query = `
-        INSERT INTO jobs (title, description, price,
+        INSERT INTO jobs (title, description, cost,
         id_doctor, created_at) VALUES (?, ?, ?, ?, now())
     `;
-    const [result] = await db.query(query, [title, description, price, id_doctor]);
+    const [result] = await db.query(query, [title, description, cost, id_doctor]);
 
     const job: Job = {
         id_job: (result as any).insertId,
         title,
         description,
-        price,
+        cost,
         id_doctor
     };
     return job;

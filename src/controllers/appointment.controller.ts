@@ -11,7 +11,7 @@ import { getDeviceTokenByUser } from '../services/user.service';
 
 export const getPendingAppointmentsController = async (req: Request, res: Response) => {
     try {
-        const appointments = await getPendingAppointmentsService();
+        const appointments = await getPendingAppointmentsService(parseInt(req.params.doctor));
 
         return res.status(200).json({
             status: 'success',
@@ -55,7 +55,7 @@ export const getAppointmentByIdController = async (req: Request, res: Response) 
 export const getAppointmentsByJobController = async (req: Request, res: Response) => {
     try {
         const id_user = (req as any).user.id;
-        const appointments = await getAppointmentsByJobService(req.params.job, id_user);
+        const appointments = await getAppointmentsByJobService(parseInt(req.params.job), id_user);
 
         return res.status(200).json({
             status: 'success',
@@ -74,10 +74,10 @@ export const getAppointmentsByJobController = async (req: Request, res: Response
 export const createAppointmentController = async (req: Request, res: Response) => {
     try {
         const id_user = (req as any).user.id;
-        const { date_appoint, observations, status, id_job, token } = req.body;
+        const { date_appoint, observations, id_job } = req.body;
 
         const newAppointment = await createAppointmentService(
-            date_appoint, observations, status, id_job, id_user
+            date_appoint, observations, id_job, id_user
         );
 
         return res.status(201).json({
