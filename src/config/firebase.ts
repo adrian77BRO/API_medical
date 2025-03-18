@@ -6,7 +6,7 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount as any),
 });
 
-export const sendNotifToOneDevice = async (data: AppointRes, token: string) => {
+export const sendConfirmNotif = async (data: AppointRes, token: string) => {
     try {
         const date_appoint = new Date(data.date_appoint);
         const message = {
@@ -16,7 +16,7 @@ export const sendNotifToOneDevice = async (data: AppointRes, token: string) => {
                 body: `📅 Fecha: ${date_appoint.toLocaleDateString("es-ES")}\n` +
                     `🛠 Servicio: ${data.title}\n` +
                     `📝 Observaciones: ${data.observations}\n` +
-                    `💰 Costo: ${data.cost}`
+                    `💰 Costo: $${data.cost}`
             },
         };
         const response = await admin.messaging().send(message);

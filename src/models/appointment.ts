@@ -20,7 +20,7 @@ export type AppointRes = {
     date_appoint: string;
     observations: string;
     status: number;
-    title: string;
+    title: string; // nombre del servicio
     cost: number;
     id_user: number;
 }

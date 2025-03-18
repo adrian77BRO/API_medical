@@ -12,6 +12,6 @@ const jobRouter = express.Router();
 jobRouter.get('/', authenticateJWT, getAllJobsController);
 jobRouter.get('/job/:id', authenticateJWT, getJobByIdController);
 jobRouter.get('/:doctor', authenticateJWT, getJobsByDoctorController);
-jobRouter.post('/', authenticateJWT, createJobController);
+jobRouter.post('/:doctor', authenticateJWT, createJobController);
 
 export default jobRouter;

@@ -1,10 +1,15 @@
 import { db } from '../config/database';
-import { Job } from '../models/job';
+import { Job, JobRes } from '../models/job';
 
-export const getAllJobsService = async (): Promise<Job[]> => {
-    const query = 'SELECT * FROM jobs ORDER BY created_at DESC';
+export const getAllJobsService = async (): Promise<JobRes[]> => {
+    const query = `
+        SELECT j.id_job, j.title, j.description, j.cost,
+        CONCAT(d.fname, ' ', d.lname) doctor FROM jobs j
+        JOIN doctors d ON d.id_doctor = j.id_doctor
+        ORDER BY j.created_at DESC
+    `;
     const [rows] = await db.query(query);
-    return rows as Job[];
+    return rows as JobRes[];
 };
 
 export const getJobByIdService = async (id: number): Promise<Job | null> => {

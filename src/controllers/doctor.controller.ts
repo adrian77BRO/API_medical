@@ -45,7 +45,7 @@ export const registerDoctorController = async (req: Request, res: Response): Pro
             message: 'Registro exitoso, ahora puedes iniciar sesión',
             user: {
                 id: user.id_doctor,
-                username: user.fname + user.lname,
+                username: user.fname + ' ' + user.lname,
                 email: user.email,
             },
         });

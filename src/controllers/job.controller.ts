@@ -69,8 +69,8 @@ export const getJobsByDoctorController = async (req: Request, res: Response) => 
 
 export const createJobController = async (req: Request, res: Response) => {
     try {
-        const { title, description, cost, id_doctor } = req.body;
-        const newJob = await createJobService(title, description, cost, id_doctor);
+        const { title, description, cost } = req.body;
+        const newJob = await createJobService(title, description, cost, parseInt(req.params.doctor));
 
         return res.status(201).json({
             status: 'success',

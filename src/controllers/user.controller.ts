@@ -45,7 +45,7 @@ export const registerController = async (req: Request, res: Response): Promise<R
             message: 'Registro exitoso, ahora puedes iniciar sesión',
             user: {
                 id: user.id_user,
-                username: user.fname + user.lname,
+                username: user.fname + ' ' + user.lname,
                 email: user.email,
                 device_token: user.device_token
             },

@@ -6,7 +6,7 @@ import {
     createAppointmentService,
     confirmAppointmentService
 } from '../services/appointment.service';
-import { sendNotifToOneDevice } from '../config/firebase';
+import { sendConfirmNotif } from '../config/firebase';
 import { getDeviceTokenByUser } from '../services/user.service';
 
 export const getPendingAppointmentsController = async (req: Request, res: Response) => {
@@ -103,7 +103,7 @@ export const confirmAppointmentController = async (req: Request, res: Response) 
             const token = await getDeviceTokenByUser(appointment.id_user);
 
             if (token) {
-                const response = await sendNotifToOneDevice(appointment, token);
+                const response = await sendConfirmNotif(appointment, token);
 
                 return res.status(201).json({
                     status: 'success',
