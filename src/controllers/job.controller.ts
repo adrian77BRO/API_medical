@@ -5,6 +5,8 @@ import {
     getJobsByDoctorService,
     createJobService
 } from '../services/job.service';
+import { getAllDeviceTokens } from '../services/user.service';
+import { sendGlobalNotif } from '../config/firebase';
 
 export const getAllJobsController = async (req: Request, res: Response) => {
     try {
@@ -72,11 +74,17 @@ export const createJobController = async (req: Request, res: Response) => {
         const { title, description, cost } = req.body;
         const newJob = await createJobService(title, description, cost, parseInt(req.params.doctor));
 
-        return res.status(201).json({
-            status: 'success',
-            message: 'Servicio médico creado',
-            job: newJob
-        });
+        const tokens = await getAllDeviceTokens();
+        if (tokens) {
+            const response = await sendGlobalNotif(newJob, tokens);
+
+            return res.status(201).json({
+                status: 'success',
+                message: 'Servicio médico creado',
+                job: newJob,
+                messageId: response
+            });
+        }
     } catch (error) {
         return res.status(500).json({
             status: 'error',

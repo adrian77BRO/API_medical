@@ -13,6 +13,12 @@ export const getDeviceTokenByUser = async (id_user: number): Promise<string> => 
     return token[0].device_token;
 };
 
+export const getAllDeviceTokens = async (): Promise<string[]> => {
+    const [rows] = await db.query('SELECT device_token FROM users');
+    const tokens = rows as { device_token: string }[];
+    return tokens.map(user => user.device_token);
+};
+
 export const registerService = async (
     fname: string,
     lname: string,
